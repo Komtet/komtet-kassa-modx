@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="komtetKassa" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" phpdoc-package="komtetKassa"
+       phpdoc-subpackage="">
+	<object class="komtetOrderFiscStatus" table="komtet_order_fisc_status" extends="xPDOSimpleObject">
+		<field key="minishop_order_id" dbtype="integer" precision="100" phptype="int" null="false" default="" />
+		<field key="fisc_status" dbtype="varchar" precision="255" phptype="string" null="true" default="" />
+	</object>
+</model>
