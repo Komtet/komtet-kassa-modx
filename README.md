@@ -19,8 +19,7 @@
 **/komtetkassa/assets/components/komtetkassa/** - статика, коннекторы, экшоны
 
 
-
-**/komtetkassa/_build/** - директория для сборки и установки пакета
+**/komtetkassa/_build/** - директория с конфигурациями для сборки и установки пакета
 
 **/komtetkassa/_build/data/** - задает модули, которыми будет обладать компонент
 
