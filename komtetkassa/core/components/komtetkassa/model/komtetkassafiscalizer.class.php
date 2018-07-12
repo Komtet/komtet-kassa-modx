@@ -57,7 +57,10 @@ class komtetKassaFiscalizer
         $payment = Payment::createCard(floatval($order->get('cost')));
 
         // Создается чек
-        $check = new Check($checkParams['id'], $user->email, Check::INTENT_SELL, intval($checkParams['sno']));
+
+        $check_method = $order->get('type') == 1 ? Check::INTENT_SELL_RETURN : Check::INTENT_SELL;
+
+        $check = new Check($checkParams['id'], $user->email, $check_method, intval($checkParams['sno']));
         $check->setShouldPrint($checkParams['is_print_check']);
         $check->addPayment($payment);
 
@@ -85,13 +88,15 @@ class komtetKassaFiscalizer
         }
 
         // Позиция стоимости доставки
-        $shippingPosition = new Position("Доставка",
-                                         floatval($order->delivery_cost),
-                                         1,
-                                         floatval($order->delivery_cost),
-                                         0,
-                                         new Vat(Vat::RATE_NO));
-        $check->addPosition($shippingPosition);
+        if (floatval($order->delivery_cost) > 0) {
+            $shippingPosition = new Position("Доставка",
+                                             floatval($order->delivery_cost),
+                                             1,
+                                             floatval($order->delivery_cost),
+                                             0,
+                                             new Vat(Vat::RATE_NO));
+            $check->addPosition($shippingPosition);
+        }
 
         // Создается клиент для подключения к комтет кассе
         $client = new Client($checkParams['shop_id'], $checkParams['secret']);

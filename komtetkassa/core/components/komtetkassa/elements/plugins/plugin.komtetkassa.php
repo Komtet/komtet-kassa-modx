@@ -15,21 +15,21 @@ switch ($modx->event->name) {
 
         $komtetKassaFiscalizer = $modx->getService('komtetKassa', 'komtetKassaFiscalizer', MODX_CORE_PATH . 'components/komtetkassa/model/');
 
-        // компонент установлен
-        if ($komtetKassaFiscalizer) {
+        // заказ имеет статус "оплачен"
+        if ($status == 2) {
 
-            // и заказ имеет статус "оплачен" и оплачен одним из способов оплаты
-            if ($status == 2 && !$order->get('type') && $payment = $order->getOne('Payment') && $payment->get('class')) {
+            $payment = $order->getOne('Payment');
+            // заказ оплачен одним из способов оплаты
+            if($payment && $payment->get('class')) {
                 $orderId = $order->get('id');
-                $existingOrderStatus = $modx->getObject('komtetOrderFiscStatus',
-                                                              array('minishop_order_id'=>$orderId));
+                $existingOrderStatus = $modx->getObject('komtetOrderFiscStatus', array('minishop_order_id'=>$orderId));
 
-                // если заказ не уходил на фискализацию
-                if ($existingOrderStatus === null){
+                // если заказ не уходил на фискализацию или это возврат
+                if ($existingOrderStatus === null || $order->get('type') == 1){
                     $komtetKassaFiscalizer->fiscalize($order);
 
                     $orderStatus = $modx->newObject('komtetOrderFiscStatus', array('minishop_order_id' => $orderId,
-                                                                                         'fisc_status' => 'pending'));
+                                                                                   'fisc_status' => 'pending'));
                     $orderStatus->save();
                 }
             }
