@@ -78,7 +78,9 @@ class komtetKassaFiscalizer
                 $vat = $opts['vat'];
             }
 
-            $positionObj = new Position($position->name,
+            $resource = $this->modx->getObject('modResource', $position->product_id);
+
+            $positionObj = new Position($resource->longtitle,
                                         floatval($position->price),
                                         floatval($position->count),
                                         $position->count*$position->price,
@@ -109,7 +111,7 @@ class komtetKassaFiscalizer
         try {
             $queueManager->putCheck($check, 'print_que');
         } catch (SdkException $e) {
-            $this->$modx->log(modX::ERROR, 'SdkException: '.$e->getMessage());
+            $this->modx->log(1, 'SdkException: '.$e->getMessage(), '', __METHOD__, __FILE__, __LINE__);
         }
     }
 }
