@@ -8,8 +8,10 @@ komtet_kassa_modx
 4. выполнить docker-compose exec web bin/bash и создать папки с правами 777:
   - /var/www/html/core/export
   - /var/www/html/core/cache
-  - /var/www/html/assets/
-  - /var/www/html/assets/components/
+  - /var/www/html/core/packages
+  - /var/www/html/core/components
+  - /var/www/html/assets
+  - /var/www/html/assets/components
 5. для новой установки создать пустой файл с именем config.inc.php в каталоге /var/www/html/core/config/ с правами 777
 6. перейти в браузере на localhost:8100/setup и выполнить установку CMS
   - Параметры подключения к БД указать:
