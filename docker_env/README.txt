@@ -3,15 +3,18 @@ komtet_kassa_modx
 
 Чтобы развернуть окружение и потестировать плагин в docker контейнере:
 1. создать в дирректории docker_env папку /php, скопировать в нее текущий установщик ModX
-2. создать папку для хранения данных БД /data/mysql
+2. создать папку для хранения данных БД /mysql
 3. выполнить docker-compose up -d
 4. выполнить docker-compose exec web bin/bash и создать папки с правами 777:
   - /var/www/html/core/export
   - /var/www/html/core/cache
   - /var/www/html/core/packages
+  - /var/www/html/core/config/
   - /var/www/html/core/components
-  - /var/www/html/assets
   - /var/www/html/assets/components
+
+  * можно использовать команду `mkdir -p /var/www/html/core/export /var/www/html/core/cache /var/www/html/core/packages /var/www/html/core/components /var/www/html/assets/components`
+
 5. для новой установки создать пустой файл с именем config.inc.php в каталоге /var/www/html/core/config/ с правами 777
 6. перейти в браузере на localhost:8100/setup и выполнить установку CMS
   - Параметры подключения к БД указать:
